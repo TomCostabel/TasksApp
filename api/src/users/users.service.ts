@@ -44,10 +44,10 @@ export class UsersService {
     return this.userModel.findOneAndDelete({ _id: id })
   }
 
-  findOne(id: string) {
-    const user = this.userModel.findOne({ _id: id });
+  findOne(email: string) {
+    const user = this.userModel.findOne({ email: email });
     if (!user) {
-      throw new NotFoundException(`Usuario con el id #${id} no encontrado`)
+      throw new NotFoundException(`Usuario con el id #${email} no encontrado`)
     }
 
     return user
