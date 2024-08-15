@@ -8,7 +8,7 @@ export class TasksController {
 
   @Post('add')
   create(@Body() createTaskDto: CreateTaskDto) {
-    return this.tasksService.createask(createTaskDto);
+    return this.tasksService.createTask(createTaskDto);
   }
 
   @Get('/:id')

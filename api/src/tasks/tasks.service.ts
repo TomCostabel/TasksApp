@@ -10,12 +10,12 @@ import { v4 as uuidv4 } from 'uuid';
 export class TasksService {
   constructor(@InjectModel(User.name) private userModel: Model<User>) { }
 
-  async createask(createTaskDto: CreateTaskDto) {
-
-    const user = await this.userModel.findById(createTaskDto.userId)
-    user.tasks.push({ title: createTaskDto.title, check: false, id: uuidv4() })
+  async createTask(createTaskDto: CreateTaskDto) {
+    const user = await this.userModel.findOne({ id: createTaskDto.id })
+    const newTask = { title: createTaskDto.title, check: false, id: uuidv4() }
+    user.tasks.push(newTask)
     user.save()
-    return user
+    return newTask
   }
 
   async findAll(id: string) {
@@ -44,7 +44,7 @@ export class TasksService {
   }
 
   async remove(taskId: string, userId: string) {
-    const user = await this.userModel.findOne({ _id: userId });
+    const user = await this.userModel.findOne({ id: userId });
     if (!user) {
       throw new NotFoundException(`Usuario con el id #${userId} no encontrado`)
     }
@@ -56,6 +56,6 @@ export class TasksService {
 
     await user.save();
 
-    return 'Tarea eliminada con exito'
+    return user
   }
 }

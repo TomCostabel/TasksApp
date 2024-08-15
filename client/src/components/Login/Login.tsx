@@ -10,11 +10,13 @@ const Login: React.FC = () => {
     error: state.error,
     isLogin: state.isLogin,
   }));
+ 
   
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    window.localStorage.setItem('email', email)
     await login(email, password);
   };
 
