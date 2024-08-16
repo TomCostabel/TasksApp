@@ -13,6 +13,7 @@ export function Tasks () {
     const navigate = useNavigate();
     useEffect(() => {
     if (!isLogin) {
+      window.localStorage.removeItem('email')
       navigate('/'); 
     }
   }, [isLogin, navigate]);

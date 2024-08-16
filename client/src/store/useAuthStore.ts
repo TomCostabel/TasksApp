@@ -12,6 +12,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   isLogin: false,
   user: null,
   error: null,
+
   login: async (email, password) => {
     try {
       const response = await fetch('http://localhost:3000/auth/login', {

@@ -24,8 +24,6 @@ interface tasksState {
 export const useTasksStore = create<tasksState>((set) => ({
   user: null,
 
-  // setUser: (user: User) => set({ user }),
-
   userData: async (email) => {
     try {
       const response = await fetch(`http://localhost:3000/users/email?email=${email}`, {
@@ -40,7 +38,6 @@ export const useTasksStore = create<tasksState>((set) => ({
       }
 
       const data: User = await response.json();
-      console.log('Fetched user data:', data.tasks); //
 
       set({ user: data });
     } catch (error) {
