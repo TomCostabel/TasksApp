@@ -24,7 +24,7 @@ export class TasksService {
   }
 
   async update(taskId: string, userId: string) {
-    const user = await this.userModel.findOne({ _id: userId });
+    const user = await this.userModel.findOne({ id: userId });
 
     if (!user) {
       throw new NotFoundException(`Usuario con el id #${userId} no encontrado`);
@@ -40,7 +40,7 @@ export class TasksService {
 
     const savedUser = await user.save();
 
-    return task.check;
+    return savedUser
   }
 
   async remove(taskId: string, userId: string) {

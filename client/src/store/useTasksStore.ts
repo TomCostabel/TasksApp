@@ -18,6 +18,7 @@ interface tasksState {
   userData: (email: string) => Promise<void>;
   addTask: (id: string | undefined, title: string) => Promise<void>;
   deleteTask: (userId: string | undefined, taskId: string) => Promise<void>;
+  updateCheck: (taskId: string, userId: string) => Promise<void>
 }
 
 export const useTasksStore = create<tasksState>((set) => ({
@@ -77,6 +78,31 @@ export const useTasksStore = create<tasksState>((set) => ({
   deleteTask: async (userId, taskId) => {
     const response = await fetch('http://localhost:3000/tasks/delete', {
       method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ userId, taskId })
+    })
+    if (!response) {
+      throw new Error('Error')
+    }
+    const actualTasks: User = await response.json()
+    set((state) => {
+      if (state.user) {
+        return {
+          user: {
+            ...state.user,
+            tasks: [...actualTasks.tasks]
+          }
+        }
+      }
+      return state
+    })
+
+  },
+  updateCheck: async (userId, taskId) => {
+    const response = await fetch('http://localhost:3000/tasks/update', {
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
       },

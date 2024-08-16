@@ -1,9 +1,21 @@
 import { useEffect, useState } from "react";
 import { useTasksStore } from "../../store/useTasksStore";
+import { useAuthStore } from "../../store/useAuthStore";
+import { useNavigate } from "react-router-dom";
 
 export function Tasks () {
-  const { user, userData, addTask, deleteTask } = useTasksStore();
+  const { user, userData, addTask, deleteTask, updateCheck } = useTasksStore();
+    const { logout, isLogin } = useAuthStore((state) => ({
+    logout: state.logout,
+    isLogin: state.isLogin,
+  }));
     const [newTask, setNewTask] = useState('');
+    const navigate = useNavigate();
+    useEffect(() => {
+    if (!isLogin) {
+      navigate('/'); 
+    }
+  }, [isLogin, navigate]);
 
  useEffect(() => {
     const emailStorage = localStorage.getItem('email');
@@ -26,6 +38,7 @@ export function Tasks () {
           <p>Name: {user.name}</p>
           <p>Email: {user.email}</p>
           <h3>Tasks</h3>
+          <button onClick={() => logout(user?.email)}>Logout</button>
           <form onSubmit={handleSubmit}>
           <input 
             type="text" 
@@ -37,9 +50,11 @@ export function Tasks () {
           </form>
           <ul>
             {user.tasks.map((task) => (
-              <li key={task._id}>
-                {task.title} - {task.check ? 'Completed' : 'Pending'}
-                <button onClick={() => deleteTask(user?.id, task.id)}>x</button>
+              <li style={{ display: 'flex'}} key={task._id}>
+                <h4 style={task.check ?{ color:'green'} :{ color:'white'} }>{task.title} </h4>
+                {/* - {task.check ? 'Completed' : 'Pending'} */}
+                <h2 onClick={() => updateCheck(user?.id, task.id)}>✔️</h2>
+                <h2 onClick={() => deleteTask(user?.id, task.id)}>x</h2>
               </li>
             ))}
           </ul>

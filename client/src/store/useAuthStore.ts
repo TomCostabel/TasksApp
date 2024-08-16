@@ -4,7 +4,7 @@ interface AuthState {
   isLogin: boolean;
   user: { email: string } | null;
   login: (email: string, password: string) => Promise<void>;
-  logout: () => void;
+  logout: (email: string) => Promise<void>;
   error: string | null;
 }
 
@@ -32,7 +32,23 @@ export const useAuthStore = create<AuthState>((set) => ({
       set({ error: 'Failed to login' });
     }
   },
-  logout: () => {
-    set({ isLogin: false, user: null });
+  logout: async (email) => {
+    try {
+      const response = await fetch('http://localhost:3000/auth/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Logout failed');
+      }
+
+      set({ isLogin: false, user: { email }, error: null });
+    } catch (error) {
+      set({ error: 'Failed to Logout' });
+    }
   },
 }));

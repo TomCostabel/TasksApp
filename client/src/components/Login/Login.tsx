@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuthStore } from '../../store/useAuthStore'; // Ajusta la ruta según tu estructura
 import { useNavigate } from 'react-router-dom'; // Asegúrate de tener react-router-dom instalado
 
@@ -21,7 +21,7 @@ const Login: React.FC = () => {
   };
 
   // Redirige al usuario si está autenticado
-  React.useEffect(() => {
+  useEffect(() => {
     if (isLogin) {
       navigate('/dashboard'); // Ajusta la ruta de redirección según tu aplicación
     }
