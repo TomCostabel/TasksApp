@@ -5,23 +5,25 @@ import { useNavigate } from 'react-router-dom';
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login, error, isLogin } = useAuthStore((state) => ({
+  const { login, error, isLogin, setLogin } = useAuthStore((state) => ({
     login: state.login,
     error: state.error,
     isLogin: state.isLogin,
+    setLogin: state.setLogin
   }));
  
-  
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     window.localStorage.setItem('email', email)
     await login(email, password);
+    setLogin(true);
   };
 
   useEffect(() => {
-    if (isLogin) {
+    const email = window.localStorage.getItem('email')
+    if (email || isLogin) {
       navigate('/dashboard'); 
     }
   }, [isLogin, navigate]);
@@ -53,6 +55,10 @@ const Login: React.FC = () => {
         {error && <p style={{ color: 'red' }}>{error}</p>}
         <button type="submit">Login</button>
       </form>
+      <div>
+        <h6>No tenes cuenta ?</h6>
+        <button onClick={() => navigate('register')} >Registrate</button>
+      </div>
     </div>
   );
 };

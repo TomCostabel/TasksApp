@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { useTasksStore } from "../../store/useTasksStore";
 import { useAuthStore } from "../../store/useAuthStore";
 import { useNavigate } from "react-router-dom";
+import NavBar from "../NavBar/NavBar";
 
 export function Tasks () {
   const { user, userData, addTask, deleteTask, updateCheck } = useTasksStore();
-    const { logout, isLogin } = useAuthStore((state) => ({
+  const {isLogin } = useAuthStore((state) => ({
     logout: state.logout,
     isLogin: state.isLogin,
   }));
@@ -35,11 +36,12 @@ export function Tasks () {
     <div>
       {user ? (
         <div>
+          <NavBar/>
           <h2>User Profile</h2>
           <p>Name: {user.name}</p>
           <p>Email: {user.email}</p>
           <h3>Tasks</h3>
-          <button onClick={() => logout(user?.email)}>Logout</button>
+          {/* <button onClick={() => logout(user?.email)}>Logout</button> */}
           <form onSubmit={handleSubmit}>
           <input 
             type="text" 

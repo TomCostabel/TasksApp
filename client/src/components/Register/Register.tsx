@@ -1,11 +1,17 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useAuthStore } from "../../store/useAuthStore"
 import { useNavigate } from "react-router-dom"
 
 const Register: React.FC =  () =>  {
-  const { register } = useAuthStore()
+  const { register, isLogin } = useAuthStore()
   const navigate = useNavigate()
 
+  useEffect(() => {
+    const email = window.localStorage.getItem('email')
+    if (email || isLogin) {
+      navigate('/dashboard'); 
+    }
+  }, [isLogin, navigate])
   const [datosRegistro, setDatosRegistro] = useState({
   name : '',
   lastName: '',
