@@ -5,6 +5,7 @@ interface AuthState {
   user: { email: string } | null;
   login: (email: string, password: string) => Promise<void>;
   logout: (email: string) => Promise<void>;
+  register: (userRegister: object) => Promise<void>
   error: string | null;
 }
 
@@ -52,4 +53,22 @@ export const useAuthStore = create<AuthState>((set) => ({
       set({ error: 'Failed to Logout' });
     }
   },
+  register: async (userRegister: object) => {
+    try {
+      const response = await fetch('http://localhost:3000/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userRegister)
+      })
+      if (!response) {
+        throw new Error('Error al registrar usuario')
+      }
+
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
 }));
