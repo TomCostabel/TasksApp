@@ -22,6 +22,7 @@ const Login: React.FC = () => {
     setLogin(true);
   };
 
+
   useEffect(() => {
     const email = window.localStorage.getItem('email')
     if (email || isLogin) {

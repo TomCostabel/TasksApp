@@ -12,7 +12,7 @@ export class TasksService {
 
   async createTask(createTaskDto: CreateTaskDto) {
     const user = await this.userModel.findOne({ id: createTaskDto.id })
-    const newTask = { title: createTaskDto.title, check: false, id: uuidv4() }
+    const newTask = { title: createTaskDto.title, check: false, id: uuidv4(), subTasks: createTaskDto.subTasks }
     user.tasks.push(newTask)
     user.save()
     return newTask

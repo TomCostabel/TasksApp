@@ -47,10 +47,19 @@ export class User {
 
   @Prop({
     required: true,
-    type: [{ title: String, check: Boolean, id: String }],
+    type: [{
+      title: String,
+      check: Boolean,
+      id: String,
+      subTasks: [{
+        title: { type: String, required: true },
+        subTaskCheck: { type: Boolean, default: false },
+        id: { type: String, required: true }
+      }],
+    }],
     default: []
   })
-  tasks: { title: string; check: boolean; id: string }[];
+  tasks: { title: string; check: boolean; id: string, subTasks: Array<{ title: string, subTaskCheck: boolean, id: string }> }[];
 
 
 }
