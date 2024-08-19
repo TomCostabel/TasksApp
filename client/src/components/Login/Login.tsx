@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuthStore } from '../../store/useAuthStore'; 
 import { useNavigate } from 'react-router-dom'; 
+import './Login.css'
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -29,9 +30,9 @@ const Login: React.FC = () => {
   }, [isLogin, navigate]);
 
   return (
-    <div>
+    <div className='container-principal'>
       <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
+      <form className='container-formulario' onSubmit={handleSubmit}>
         <div>
           <label htmlFor="email">Email:</label>
           <input
