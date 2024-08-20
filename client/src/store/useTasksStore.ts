@@ -26,7 +26,8 @@ interface tasksState {
   userData: (email: string) => Promise<void>;
   addTask: (id: string | undefined, title: string) => Promise<void>;
   deleteTask: (userId: string | undefined, taskId: string) => Promise<void>;
-  updateCheck: (taskId: string, userId: string) => Promise<void>
+  updateCheck: (taskId: string, userId: string) => Promise<void>;
+  addSubTask: (taskId: string, userId: string, title: string) => Promise<void>
 }
 
 export const useTasksStore = create<tasksState>((set) => ({
@@ -123,6 +124,33 @@ export const useTasksStore = create<tasksState>((set) => ({
           user: {
             ...state.user,
             tasks: [...actualTasks.tasks]
+          }
+        }
+      }
+      return state
+    })
+
+  },
+  addSubTask: async (userId, taskId, title) => {
+    const response = await fetch('http://localhost:3000/sub-tasks/add', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ userId, taskId, title })
+    })
+    if (!response.ok) {
+      throw new Error('User not found');
+    }
+    const newTasks: Task = await response.json()
+
+
+    set((state) => {
+      if (state.user) {
+        return {
+          user: {
+            ...state.user,
+            tasks: [newTasks]
           }
         }
       }

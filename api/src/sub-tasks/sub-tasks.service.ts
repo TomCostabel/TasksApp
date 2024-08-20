@@ -28,7 +28,7 @@ export class SubTasksService {
 
     await user.save()
 
-    return newSubTask
+    return user.tasks
   }
 
 

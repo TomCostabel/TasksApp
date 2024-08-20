@@ -4,39 +4,53 @@ import { useAuthStore } from "../../store/useAuthStore";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
 
-export function Tasks () {
-  const { user, userData, addTask, deleteTask, updateCheck } = useTasksStore();
-  const {isLogin } = useAuthStore((state) => ({
-    logout: state.logout,
-    isLogin: state.isLogin,
-  }));
-    const [newTask, setNewTask] = useState('');
-    const [newSubTask, setNewSubTask] = useState('');
 
-    const navigate = useNavigate();
-    useEffect(() => {
-    if (!isLogin) {
-      window.localStorage.removeItem('email')
-      navigate('/'); 
-    }
+type NewSubTasksState = {
+  [taskId: string]: string;
+};
+
+export function Tasks () {
+
+  const navigate = useNavigate();
+  const [newTask, setNewTask] = useState('');
+  const [newSubTask, setNewSubTask] = useState<NewSubTasksState>({});
+  const { user, userData, addTask, deleteTask, updateCheck, addSubTask } = useTasksStore();
+  const {isLogin } = useAuthStore((state) => ({logout: state.logout, isLogin: state.isLogin}));
+
+  useEffect(() => {
+  if (!isLogin) {
+    window.localStorage.removeItem('email')
+    navigate('/'); 
+  }
   }, [isLogin, navigate]);
 
- useEffect(() => {
-    const emailStorage = localStorage.getItem('email');
-    if (emailStorage) {
-      userData(emailStorage);
-    }
-}, [userData]);
+  useEffect(() => {
+      const emailStorage = localStorage.getItem('email');
+      if (emailStorage) {
+        userData(emailStorage);
+      }
+  }, [userData]);
+  
+  // ------------Actualiza solo la sub-tarea correspondiente al taskId------------>
+  const handleChange = (e:any, taskId:string) => {
+    setNewSubTask((prevState) => ({
+      ...prevState,
+      [taskId]: e.target.value
+    }));
+  };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitTask = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     await addTask(user?.id, newTask)
     setNewTask('')
   }
-  const handleSubmitSubTask = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitSubTask = async (e: React.FormEvent<HTMLFormElement>, taskId: string) => {
     e.preventDefault()
-    await addTask(user?.id, newTask)
-    setNewSubTask('')
+    const subTask = newSubTask[taskId]
+    if (!subTask) return;
+    if (!user || !taskId) return;
+    await addSubTask(user?.id, taskId, subTask)
+    setNewSubTask({})
   }
   
   return (
@@ -45,14 +59,16 @@ export function Tasks () {
         <div>
           <NavBar/>
           <h3>Tasks</h3>
-          <form onSubmit={handleSubmit}>
+
+          {/* --------------------FORM AGREGAR NUEVA TASK-------------------- */}
+          <form onSubmit={handleSubmitTask}>
           <input 
             type="text" 
             value={newTask} 
             placeholder="Tarea nueva..." 
             onChange={(e) => setNewTask(e.target.value)} 
             required/>
-          <button onClick={() => {}}>+</button>
+          <button >+</button>
           </form>
           <ul>
             {user.tasks.map((task) => (
@@ -64,15 +80,15 @@ export function Tasks () {
               </li>
               <div>
 
-                {/* --------------------FORM AGREGAR NUEVEA SUB TASK-------------------- */}
-              <form onSubmit={handleSubmitSubTask}>
+                {/* --------------------FORM AGREGAR NUEVA SUB TASK-------------------- */}
+              <form onSubmit={(e) => handleSubmitSubTask(e, task.id)}>
               <input 
                 type="text" 
-                value={newSubTask} 
-                placeholder="Tarea nueva..." 
-                onChange={(e) => setNewSubTask(e.target.value)} 
+                value={newSubTask[task.id] || ''} 
+                placeholder="SubTarea nueva..." 
+                onChange={(e) => handleChange(e, task.id)} 
                 required/>
-              <button onClick={() => {}}>+</button>
+              <button>+</button>
               </form>
                 {task.subTasks?.map((subTask) => (
                   <div key={subTask.id}>
