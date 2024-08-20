@@ -11,11 +11,6 @@ export class TasksController {
     return this.tasksService.createTask(createTaskDto);
   }
 
-  @Get('/:id')
-  findAll(@Param('id') id: string) {
-    return this.tasksService.findAll(id);
-  }
-
   @Patch('update')
   update(@Body() body: { taskId: string, userId: string }) {
     const { taskId, userId } = body;

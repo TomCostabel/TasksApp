@@ -1,9 +1,17 @@
 import { create } from 'zustand'
+
+interface SubTask {
+  title: string;
+  subTaskCheck: boolean;
+  id: string;
+  _id: string;
+}
 interface Task {
   title: string;
   check: boolean;
   id: string;
-  _id: string
+  _id: string;
+  subTasks: SubTask[]
 }
 
 interface User {

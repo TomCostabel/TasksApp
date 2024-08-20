@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateSubTaskDto } from './dto/create-sub-task.dto';
 import { UpdateSubTaskDto } from './dto/update-sub-task.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -31,19 +31,40 @@ export class SubTasksService {
     return newSubTask
   }
 
-  findAll() {
-    return `This action returns all subTasks`;
+
+  async update(userId: string, taskId: string, subTaskId: string) {
+    const user = await this.userModel.findOne({ id: userId })
+
+    if (!user) {
+      throw new NotFoundException(`Usuario con el id #${userId} no encontrado`)
+    }
+    const task = user.tasks.find(task => task.id === taskId)
+    if (!user.tasks.find((elm: any) => elm.id === taskId)) {
+      return `No se encontro tarea con este id ${taskId}`
+    }
+
+    const subTask = task.subTasks.find((task: any) => task.id === subTaskId)
+    subTask.subTaskCheck = !subTask.subTaskCheck
+
+    user.save()
+
+    return subTask.subTaskCheck
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} subTask`;
-  }
+  async remove(userId: string, taskId: string, subTaskId: string) {
+    const user = await this.userModel.findOne({ id: userId })
+    if (!user) {
+      throw new NotFoundException(`Usuario con el id #${userId} no encontrado`)
+    }
+    const task = user.tasks.find(task => task.id === taskId)
+    if (!user.tasks.find((elm: any) => elm.id === taskId)) {
+      return `No se encontro tarea con este id ${taskId}`
+    }
 
-  update(id: number, updateSubTaskDto: UpdateSubTaskDto) {
-    return `This action updates a #${id} subTask`;
-  }
+    task.subTasks = task.subTasks.filter((task: any) => task.id !== subTaskId)
 
-  remove(id: number) {
-    return `This action removes a #${id} subTask`;
+    await user.save()
+
+    return task.subTasks
   }
 }

@@ -12,23 +12,15 @@ export class SubTasksController {
     return this.subTasksService.createSubTask(createSubTaskDto);
   }
 
-  @Get()
-  findAll() {
-    return this.subTasksService.findAll();
+  @Patch('update')
+  update(@Body() body: { userId: string, taskId: string, subTaskId: string }) {
+    const { userId, taskId, subTaskId } = body
+    return this.subTasksService.update(userId, taskId, subTaskId);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.subTasksService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSubTaskDto: UpdateSubTaskDto) {
-    return this.subTasksService.update(+id, updateSubTaskDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.subTasksService.remove(+id);
+  @Delete('remove')
+  remove(@Body() body: { userId: string, taskId: string, subTaskId: string }) {
+    const { userId, taskId, subTaskId } = body
+    return this.subTasksService.remove(userId, taskId, subTaskId);
   }
 }
