@@ -1,6 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateSubTaskDto } from './dto/create-sub-task.dto';
-import { UpdateSubTaskDto } from './dto/update-sub-task.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from 'src/schemas/user.schema';
@@ -48,7 +47,7 @@ export class SubTasksService {
 
     user.save()
 
-    return subTask.subTaskCheck
+    return user.tasks
   }
 
   async remove(userId: string, taskId: string, subTaskId: string) {
@@ -65,6 +64,6 @@ export class SubTasksService {
 
     await user.save()
 
-    return task.subTasks
+    return user.tasks
   }
 }

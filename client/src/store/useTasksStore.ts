@@ -27,7 +27,9 @@ interface tasksState {
   addTask: (id: string | undefined, title: string) => Promise<void>;
   deleteTask: (userId: string | undefined, taskId: string) => Promise<void>;
   updateCheck: (taskId: string, userId: string) => Promise<void>;
-  addSubTask: (taskId: string, userId: string, title: string) => Promise<void>
+  addSubTask: (taskId: string, userId: string, title: string) => Promise<void>;
+  deleteSubTask: (userId: string, taskId: string, subTaskId: string) => Promise<void>;
+  updateCheckSubTask: (userId: string, taskId: string, subTaskId: string) => Promise<void>
 }
 
 export const useTasksStore = create<tasksState>((set) => ({
@@ -142,7 +144,7 @@ export const useTasksStore = create<tasksState>((set) => ({
     if (!response.ok) {
       throw new Error('User not found');
     }
-    const newTasks: Task = await response.json()
+    const newTasks: Task[] = await response.json()
 
 
     set((state) => {
@@ -150,7 +152,63 @@ export const useTasksStore = create<tasksState>((set) => ({
         return {
           user: {
             ...state.user,
-            tasks: [newTasks]
+            tasks: newTasks
+          }
+        }
+      }
+      return state
+    })
+
+  },
+  deleteSubTask: async (userId, taskId, subTaskId) => {
+    const response = await fetch('http://localhost:3000/sub-tasks/remove', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ userId, taskId, subTaskId })
+    })
+    if (!response.ok) {
+      throw new Error('Response Error Not Found')
+    }
+
+    const newTasks: Task[] = await response.json()
+
+    set((state) => {
+      if (state.user) {
+        return {
+          user: {
+            ...state.user,
+            tasks: newTasks
+          }
+        }
+
+      }
+      return state
+
+
+    })
+  },
+  updateCheckSubTask: async (userId, taskId, subTaskId) => {
+    const response = await fetch('http://localhost:3000/sub-tasks/update', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ userId, taskId, subTaskId })
+    })
+    if (!response.ok) {
+      throw new Error('Response Error')
+    }
+    const newTasks: Task[] = await response.json()
+
+    set((state) => {
+      if (state.user) {
+        return {
+
+          user: {
+            ...state.user,
+            tasks: newTasks
           }
         }
       }
@@ -158,4 +216,5 @@ export const useTasksStore = create<tasksState>((set) => ({
     })
 
   }
+
 }));

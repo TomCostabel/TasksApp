@@ -14,7 +14,7 @@ export function Tasks () {
   const navigate = useNavigate();
   const [newTask, setNewTask] = useState('');
   const [newSubTask, setNewSubTask] = useState<NewSubTasksState>({});
-  const { user, userData, addTask, deleteTask, updateCheck, addSubTask } = useTasksStore();
+  const { user, userData, addTask, deleteTask, updateCheck, addSubTask, deleteSubTask, updateCheckSubTask } = useTasksStore();
   const {isLogin } = useAuthStore((state) => ({logout: state.logout, isLogin: state.isLogin}));
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export function Tasks () {
   }, [userData]);
   
   // ------------Actualiza solo la sub-tarea correspondiente al taskId------------>
-  const handleChange = (e:any, taskId:string) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>, taskId:string) => {
     setNewSubTask((prevState) => ({
       ...prevState,
       [taskId]: e.target.value
@@ -50,7 +50,10 @@ export function Tasks () {
     if (!subTask) return;
     if (!user || !taskId) return;
     await addSubTask(user?.id, taskId, subTask)
-    setNewSubTask({})
+    setNewSubTask(prev => ({
+    ...prev,
+    [taskId]: ''
+  }))
   }
   
   return (
@@ -71,7 +74,7 @@ export function Tasks () {
           <button >+</button>
           </form>
           <ul>
-            {user.tasks.map((task) => (
+            {user.tasks?.map((task) => (
               <div key={task.id}>
               <li style={{ display: 'flex'}} key={task._id}>
                 <h4 style={task.check ?{ color:'green'} :{ color:'white'} }>{task.title} </h4>
@@ -90,15 +93,19 @@ export function Tasks () {
                 required/>
               <button>+</button>
               </form>
-                {task.subTasks?.map((subTask) => (
+              
+              {task.subTasks?.map((subTask) => {
+                return (
                   <div key={subTask.id}>
-                   <li style={{ display: 'flex'}} key={task._id}>
-                <h6 style={subTask.subTaskCheck ?{ color:'green'} :{ color:'aqua'} }>{subTask.title} </h6>
-                <h4 >✔️</h4>
-                <h4 >x</h4>
-              </li>
+                    <li style={{ display: 'flex'}} >
+                      <h6 style={subTask.subTaskCheck ? { color: 'green' } : { color: 'aqua' }}>{subTask.title}</h6>
+                      <h4 onClick={() => updateCheckSubTask(user.id, task.id, subTask.id)}>✔️</h4>
+                      <h4  onClick={() => deleteSubTask(user.id, task.id, subTask.id)}>x</h4>
+                    </li>
                   </div>
-                ))}
+                );
+              })}
+
               </div>
               </div>
             ))}
