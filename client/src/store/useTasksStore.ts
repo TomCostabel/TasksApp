@@ -1,36 +1,5 @@
 import { create } from 'zustand'
-
-export interface SubTask {
-  title: string;
-  subTaskCheck: boolean;
-  id: string;
-  _id: string;
-}
-export interface Task {
-  title: string;
-  check: boolean;
-  id: string;
-  _id: string;
-  subTasks: SubTask[]
-}
-
-interface User {
-  id: string;
-  email: string;
-  name: string;
-  tasks: Task[];
-}
-
-interface tasksState {
-  user: User | null;
-  userData: (email: string) => Promise<void>;
-  addTask: (id: string | undefined, title: string) => Promise<void>;
-  deleteTask: (userId: string | undefined, taskId: string) => Promise<void>;
-  updateCheck: (taskId: string, userId: string) => Promise<void>;
-  addSubTask: (taskId: string, userId: string, title: string) => Promise<void>;
-  deleteSubTask: (userId: string, taskId: string, subTaskId: string) => Promise<void>;
-  updateCheckSubTask: (userId: string, taskId: string, subTaskId: string) => Promise<void>
-}
+import { Task, tasksState, User } from '../types/types';
 
 export const useTasksStore = create<tasksState>((set) => ({
   user: null,

@@ -1,12 +1,4 @@
-import { SubTask } from "../../store/useTasksStore";
-
-type SubTaskItemProps = {
-  subTask: SubTask; //----> arreglar
-  taskId: string;
-  userId: string;
-  updateCheckSubTask: (userId: string, taskId: string, subTaskId: string) => void;
-  deleteSubTask: (userId: string, taskId: string, subTaskId: string) => void;
-};
+import { SubTaskItemProps } from "../../types/types";
 
 const SubTaskItem = ({ subTask, taskId, userId, updateCheckSubTask, deleteSubTask }: SubTaskItemProps) => {
   return (

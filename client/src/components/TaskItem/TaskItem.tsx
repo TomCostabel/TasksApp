@@ -1,17 +1,5 @@
-import { Task } from "../../store/useTasksStore";
+import { TaskItemProps } from "../../types/types";
 import SubTaskItem from "../SubTaskItem/SubTaskItem";
-
-type TaskItemProps = {
-  task: Task;
-  userId: string;
-  newSubTask: string;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>, taskId: string) => void;
-  handleSubmitSubTask: (e: React.FormEvent<HTMLFormElement>, taskId: string) => void;
-  updateCheck: (userId: string, taskId: string) => void;
-  deleteTask: (userId: string, taskId: string) => void;
-  updateCheckSubTask: (userId: string, taskId: string, subTaskId: string) => void;
-  deleteSubTask: (userId: string, taskId: string, subTaskId: string) => void;
-};
 
 const TaskItem = ({ task, userId, newSubTask, handleChange, handleSubmitSubTask, updateCheck, deleteTask, updateCheckSubTask, deleteSubTask }: TaskItemProps) => {
   return (

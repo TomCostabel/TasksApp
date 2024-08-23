@@ -5,6 +5,14 @@ import { useNavigate } from "react-router-dom"
 const Register: React.FC =  () =>  {
   const { register, isLogin } = useAuthStore()
   const navigate = useNavigate()
+  const [error, setError] = useState('')
+  const [datosRegistro, setDatosRegistro] = useState({
+  name : '',
+  lastName: '',
+  email: '',
+  password: '',
+  verificacionPassword: ''
+})
 
   useEffect(() => {
     const email = window.localStorage.getItem('email')
@@ -12,17 +20,16 @@ const Register: React.FC =  () =>  {
       navigate('/dashboard'); 
     }
   }, [isLogin, navigate])
-  const [datosRegistro, setDatosRegistro] = useState({
-  name : '',
-  lastName: '',
-  email: '',
-  password: ''
-})
 
   const handleSubmit = (e : React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    if(datosRegistro.password !== datosRegistro.verificacionPassword) {
+      setError('Las contraseñas no coinciden')
+      throw new Error('Las contraseñas no coinciden')
+    }
+    setError('')
     register(datosRegistro)
-    navigate('/login')
+    navigate('/')
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,6 +84,17 @@ const Register: React.FC =  () =>  {
             required
           />
         </div>
+         <div>
+          <label htmlFor="password">Verificar Contraseña:</label>
+          <input
+            type="password"
+            id="verificacionPassword"
+            value={datosRegistro.verificacionPassword}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        {error ? <h5 style={{color: 'red'}}>Las contraseñas no coinciden</h5>: null }
         <button type="submit">Register</button>
 
       </form>

@@ -5,18 +5,17 @@ import { useNavigate } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
 import TaskItem from "../TaskItem/TaskItem";
 
-
 type NewSubTasksState = {
   [taskId: string]: string;
 };
 
 export function Tasks () {
 
-  const navigate = useNavigate();
-  const [newTask, setNewTask] = useState('');
-  const [newSubTask, setNewSubTask] = useState<NewSubTasksState>({});
   const { user, userData, addTask, deleteTask, updateCheck, addSubTask, deleteSubTask, updateCheckSubTask } = useTasksStore();
   const {isLogin } = useAuthStore((state) => ({logout: state.logout, isLogin: state.isLogin}));
+  const [newSubTask, setNewSubTask] = useState<NewSubTasksState>({});
+  const [newTask, setNewTask] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
   if (!isLogin) {
@@ -56,7 +55,6 @@ export function Tasks () {
     [taskId]: ''
   }))
   }
-  
   
   return (
     <div>
