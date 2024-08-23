@@ -1,12 +1,12 @@
 import { create } from 'zustand'
 
-interface SubTask {
+export interface SubTask {
   title: string;
   subTaskCheck: boolean;
   id: string;
   _id: string;
 }
-interface Task {
+export interface Task {
   title: string;
   check: boolean;
   id: string;

@@ -3,6 +3,7 @@ import { useTasksStore } from "../../store/useTasksStore";
 import { useAuthStore } from "../../store/useAuthStore";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
+import TaskItem from "../TaskItem/TaskItem";
 
 
 type NewSubTasksState = {
@@ -63,8 +64,6 @@ export function Tasks () {
         <div>
           <NavBar/>
           <h3>Tasks</h3>
-
-          {/* --------------------FORM AGREGAR NUEVA TASK-------------------- */}
           <form onSubmit={handleSubmitTask}>
           <input 
             type="text" 
@@ -75,40 +74,19 @@ export function Tasks () {
           <button >+</button>
           </form>
           <ul>
-            {user.tasks?.map((task) => (
-              <div key={task.id}>
-              <li style={{ display: 'flex'}} key={task._id}>
-                <h4 style={task.check ?{ color:'green'} :{ color:'white'} }>{task.title} </h4>
-                <h2 onClick={() => updateCheck(user?.id, task.id)}>✔️</h2>
-                <h2 onClick={() => deleteTask(user?.id, task.id)}>x</h2>
-              </li>
-              <div>
-
-                {/* --------------------FORM AGREGAR NUEVA SUB TASK-------------------- */}
-              <form onSubmit={(e) => handleSubmitSubTask(e, task.id)}>
-              <input 
-                type="text" 
-                value={newSubTask[task.id] || ''} 
-                placeholder="SubTarea nueva..." 
-                onChange={(e) => handleChange(e, task.id)} 
-                required/>
-              <button>+</button>
-              </form>
-              
-              {task.subTasks?.map((subTask) => {
-                return (
-                  <div key={subTask.id}>
-                    <li style={{ display: 'flex'}} >
-                      <h6 style={subTask.subTaskCheck ? { color: 'green' } : { color: 'aqua' }}>{subTask.title}</h6>
-                      <h4 onClick={() => updateCheckSubTask(user.id, task.id, subTask.id)}>✔️</h4>
-                      <h4  onClick={() => deleteSubTask(user.id, task.id, subTask.id)}>x</h4>
-                    </li>
-                  </div>
-                );
-              })}
-
-              </div>
-              </div>
+          {user.tasks?.map((task) => (
+              <TaskItem
+                key={task.id}
+                task={task}
+                userId={user.id}
+                newSubTask={newSubTask[task.id] || ''}
+                handleChange={handleChange}
+                handleSubmitSubTask={handleSubmitSubTask}
+                updateCheck={updateCheck}
+                deleteTask={deleteTask}
+                updateCheckSubTask={updateCheckSubTask}
+                deleteSubTask={deleteSubTask}
+              />
             ))}
           </ul>
         </div>
