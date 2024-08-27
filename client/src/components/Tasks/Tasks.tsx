@@ -10,7 +10,11 @@ type NewSubTasksState = {
   [taskId: string]: string;
 };
 
+
 export function Tasks () {
+
+
+  
 
   const { user, userData, addTask, deleteTask, updateCheck, addSubTask, deleteSubTask, updateCheckSubTask } = useTasksStore();
   const {isLogin } = useAuthStore((state) => ({logout: state.logout, isLogin: state.isLogin}));
@@ -33,14 +37,14 @@ export function Tasks () {
   }, [userData]);
   
   // ------------Actualiza solo la sub-tarea correspondiente al taskId------------>
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>, taskId:string) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>, taskId:string)   => {
     setNewSubTask((prevState) => ({
       ...prevState,
       [taskId]: e.target.value
     }));
   };
 
-  const handleSubmitTask = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitTask = async (e: React.FormEvent<HTMLFormElement>)  => {
     e.preventDefault()
     await addTask(user?.id, newTask)
     setNewTask('')
@@ -77,7 +81,7 @@ export function Tasks () {
               <span className="input-border"></span>
             </form>
           </header>
-          {user?.tasks?.map((task) => (
+          { user?.tasks?.map((task) => (
               <TaskItem
               
                 key={task.id}
