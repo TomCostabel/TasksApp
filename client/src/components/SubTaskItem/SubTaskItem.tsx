@@ -1,4 +1,5 @@
 import { SubTaskItemProps } from "../../types/types";
+import './SubTaskItem.css'
 
 const SubTaskItem = ({ subTask, taskId, userId, updateCheckSubTask, deleteSubTask }: SubTaskItemProps) => {
   return (

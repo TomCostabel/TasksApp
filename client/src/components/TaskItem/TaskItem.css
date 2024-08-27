@@ -1,0 +1,97 @@
+.container-principal-taskItem {
+  /* border: 1px solid rgb(252, 252, 252); */
+  width: 600px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.tarea {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  font-size: 15px;
+  gap: 6px;
+}
+
+.button-check {
+  cursor: pointer;
+}
+
+.button-check:hover {
+  color: #6dce13;
+  transition: 200ms;
+}
+
+.button-delete {
+  cursor: pointer;
+}
+
+.button-delete:hover {
+  color: #f33413;
+  transition: 200ms;
+}
+
+/* ---------------BUTTON----------- */
+.button-subTarea {
+  font-family: monospace;
+  font-size: 10px;
+  color: #FAFAFA;
+  text-transform: uppercase;
+  padding: 1px 5px;
+  border-radius: 10px;
+  border: 1px solid #FAFAFA;
+  background: #252525;
+  box-shadow: 1px 1px #fafafa;
+  cursor: pointer;
+  margin: 9px 0;
+}
+
+.button-subTarea:active {
+  box-shadow: none;
+  transform: translate(3px, 3px);
+}
+
+/* --------------------INPUT------------------ */
+.form-subTarea {
+  --width-of-input: 200px;
+  --border-height: 1px;
+  --border-before-color: rgba(221, 221, 221, 0.39);
+  --border-after-color: #ffffff;
+  --input-hovered-color: #e049a61f;
+  position: relative;
+  width: var(--width-of-input);
+  display: flex;
+}
+
+.input-subTarea {
+  color: #fff;
+  font-size: 0.7rem;
+  background-color: transparent;
+  width: 60%;
+  box-sizing: border-box;
+  padding-inline: 0.5em;
+  padding-block: 0.7em;
+  border: none;
+  border-bottom: var(--border-height) solid var(--border-before-color);
+}
+
+.input-border-subTarea {
+  position: absolute;
+  background: var(--border-after-color);
+  width: 0%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  transition: 0.3s;
+}
+
+input:focus {
+  outline: none;
+}
+
+input:focus~.input-border-subTarea {
+  width: 60%;
+}

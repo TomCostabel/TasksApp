@@ -4,6 +4,7 @@ import { useAuthStore } from "../../store/useAuthStore";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
 import TaskItem from "../TaskItem/TaskItem";
+import './tasks.css'
 
 type NewSubTasksState = {
   [taskId: string]: string;
@@ -57,23 +58,28 @@ export function Tasks () {
   }
   
   return (
-    <div>
+    <div >
+      <NavBar/>
       {user ? (
-        <div>
-          <NavBar/>
-          <h3>Tasks</h3>
-          <form onSubmit={handleSubmitTask}>
-          <input 
-            type="text" 
-            value={newTask} 
-            placeholder="Tarea nueva..." 
-            onChange={(e) => setNewTask(e.target.value)} 
-            required/>
-          <button >+</button>
-          </form>
-          <ul>
-          {user.tasks?.map((task) => (
+        <div  className="container">
+          <header className="container-header">
+            <h3>Tasks</h3>
+            <form className="form"  onSubmit={handleSubmitTask}>
+              <input 
+              className="input"
+                type="text" 
+                value={newTask} 
+                placeholder="Tarea nueva..." 
+                onChange={(e) => setNewTask(e.target.value)} 
+                required/>
+
+              <button className="button-tarea">+</button>
+              <span className="input-border"></span>
+            </form>
+          </header>
+          {user?.tasks?.map((task) => (
               <TaskItem
+              
                 key={task.id}
                 task={task}
                 userId={user.id}
@@ -86,7 +92,6 @@ export function Tasks () {
                 deleteSubTask={deleteSubTask}
               />
             ))}
-          </ul>
         </div>
       ) : (
         <p>Loading user data...</p>

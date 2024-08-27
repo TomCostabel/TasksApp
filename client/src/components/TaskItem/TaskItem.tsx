@@ -1,23 +1,28 @@
 import { TaskItemProps } from "../../types/types";
 import SubTaskItem from "../SubTaskItem/SubTaskItem";
+import './TaskItem.css'
 
 const TaskItem = ({ task, userId, newSubTask, handleChange, handleSubmitSubTask, updateCheck, deleteTask, updateCheckSubTask, deleteSubTask }: TaskItemProps) => {
   return (
-    <div>
-      <li style={{ display: 'flex' }} key={task._id}>
-        <h4 style={task.check ? { color: 'green' } : { color: 'white' }}>{task.title}</h4>
-        <h2 onClick={() => updateCheck(userId, task.id)}>✔️</h2>
-        <h2 onClick={() => deleteTask(userId, task.id)}>x</h2>
+    <div className="container-principal-taskItem" >
+      <li className="tarea"  key={task._id}>
+        <h4 style={task.check ? { color: '#6dce13' } : { color: 'white' }}>{task.title}</h4>
+        <span/>
+        <span/>
+        <h4 className="button-check" onClick={() => updateCheck(userId, task.id)}>✔</h4>
+        <h4 className="button-delete" onClick={() => deleteTask(userId, task.id)}>✘</h4>
       </li>
-      <div>
-        <form onSubmit={(e) => handleSubmitSubTask(e, task.id)}>
+      <div  >
+        <form className="form-subTarea"  onSubmit={(e) => handleSubmitSubTask(e, task.id)}>
           <input 
+          className="input-subTarea"
             type="text" 
             value={newSubTask} 
             placeholder="SubTarea nueva..." 
             onChange={(e) => handleChange(e, task.id)} 
             required />
-          <button>+</button>
+          <button className="button-subTarea">+</button>
+          <span className="input-border-subTarea"></span>
         </form>
         {task.subTasks?.map((subTask) => (
           <SubTaskItem

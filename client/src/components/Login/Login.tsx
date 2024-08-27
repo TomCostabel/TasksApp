@@ -6,26 +6,24 @@ import './Login.css'
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login, error, isLogin, setLogin } = useAuthStore((state) => ({
+  const { login, error, isLogin } = useAuthStore((state) => ({
     login: state.login,
     error: state.error,
     isLogin: state.isLogin,
-    setLogin: state.setLogin
   }));
  
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    window.localStorage.setItem('email', email)
     await login(email, password);
-    setLogin(true);
+    window.localStorage.setItem('email', email)
   };
 
 
   useEffect(() => {
     const email = window.localStorage.getItem('email')
-    if (email || isLogin) {
+    if (email) {
       navigate('/dashboard'); 
     }
   }, [isLogin, navigate]);

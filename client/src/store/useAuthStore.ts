@@ -35,7 +35,7 @@ export const useAuthStore = create<AuthState>()(
 
           set({ isLogin: true, user: { email }, error: null });
         } catch (error) {
-          set({ error: 'Failed to login' });
+          set({ error: `${error}` });
         }
       },
 
@@ -55,7 +55,7 @@ export const useAuthStore = create<AuthState>()(
 
           set({ isLogin: false, user: null, error: null });
         } catch (error) {
-          set({ error: 'Failed to Logout' });
+          set({ error: `${error}` });
         }
       },
 
@@ -75,7 +75,7 @@ export const useAuthStore = create<AuthState>()(
 
           set({ error: null });
         } catch (error) {
-          set({ error: 'Failed to register' });
+          set({ error: `${error}` });
         }
       },
     }),
