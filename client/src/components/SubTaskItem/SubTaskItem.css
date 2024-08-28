@@ -1,0 +1,39 @@
+.subTasks {
+  display: flex;
+  height: 40px;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+  margin-bottom: 20px;
+  /* background-color: red; */
+}
+
+.container-subtask-check-delete {
+  display: flex;
+  height: 40px;
+  width: 50px;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.button-checkSubTask {
+  font-size: 15px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.button-checkSubTask:hover {
+  color: #ce5813;
+  transition: 200ms;
+}
+
+.button-deleteSubTask {
+  font-size: 15px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.button-deleteSubTask:hover {
+  color: #d81414;
+  transition: 200ms;
+}

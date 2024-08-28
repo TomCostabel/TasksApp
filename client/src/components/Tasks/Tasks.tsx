@@ -67,10 +67,11 @@ export function Tasks () {
       {user ? (
         <div  className="container">
           <header className="container-header">
-            <h3>Tasks</h3>
+            <h3 style={{ fontSize:'40px'}}>Tasks</h3>
             <form className="form"  onSubmit={handleSubmitTask}>
               <input 
-              className="input"
+                className="input"
+                maxLength={69}
                 type="text" 
                 value={newTask} 
                 placeholder="Tarea nueva..." 
@@ -81,21 +82,24 @@ export function Tasks () {
               <span className="input-border"></span>
             </form>
           </header>
-          { user?.tasks?.map((task) => (
-              <TaskItem
-              
-                key={task.id}
-                task={task}
-                userId={user.id}
-                newSubTask={newSubTask[task.id] || ''}
+          <div className="container-tareas"> 
+
+          {user.tasks.length > 0 ? user?.tasks?.map((task) => (
+            <TaskItem
+            
+            key={task.id}
+            task={task}
+            userId={user.id}
+            newSubTask={newSubTask[task.id] || ''}
                 handleChange={handleChange}
                 handleSubmitSubTask={handleSubmitSubTask}
                 updateCheck={updateCheck}
                 deleteTask={deleteTask}
                 updateCheckSubTask={updateCheckSubTask}
                 deleteSubTask={deleteSubTask}
-              />
-            ))}
+                />
+              )) : <h3>No hay tareas pendientes.</h3>}
+              </div>
         </div>
       ) : (
         <p>Loading user data...</p>
