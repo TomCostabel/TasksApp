@@ -20,7 +20,7 @@ const NavBar: React.FC = () => {
     <div className="container-navBar" >
       <div className="container-inf-logout">
         <div className="inf-user">
-          <img style={{ width:'auto', borderRadius:'50%', height:'40px',}} src="https://i.pinimg.com/564x/cd/bb/03/cdbb038a2e8fb80179913c6cebdbde26.jpg" /> 
+          <img style={{ width:'auto', borderRadius:'50%', height:'30px',}} src="https://i.pinimg.com/564x/cd/bb/03/cdbb038a2e8fb80179913c6cebdbde26.jpg" /> 
           <h3 className="navBar-name"> {user?.name ? user.name.charAt(0).toUpperCase() + user.name.slice(1) : ''}</h3>
         </div>
         <div className="conteiner-logout">
