@@ -16,13 +16,13 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await login(email, password);
+    await login(email, password)
     window.localStorage.setItem('email', email)
   };
 
 
   useEffect(() => {
-    const email = window.localStorage.getItem('email')
+    const email =  window.localStorage.getItem('email')
     if (email) {
       navigate('/dashboard'); 
     }
