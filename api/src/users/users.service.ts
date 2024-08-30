@@ -24,6 +24,10 @@ export class UsersService {
   async createUser(newUser: CreateUserDto): Promise<User> {
     const { email } = newUser
     try {
+      const userExistente = await this.userModel.findOne({ email: email })
+      if (userExistente) {
+        throw new Error('Email ya registrado')
+      }
       const hashedPassword = await this.hashPassword(newUser.password);
       const createdUser = new this.userModel({
         ...newUser,

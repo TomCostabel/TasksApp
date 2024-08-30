@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useAuthStore } from "../../store/useAuthStore"
 import { useNavigate } from "react-router-dom"
+import './Register.css'
 
 const Register: React.FC =  () =>  {
   const { register, isLogin } = useAuthStore()
@@ -41,12 +42,15 @@ const Register: React.FC =  () =>  {
   }
 
   return (
-    <div>
-      <h1>register</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="container-principal-registro">
+      <div className='container-logo'>
+      <h1 style={{color:'white', height:'50px',fontSize:'35px', display:'flex', alignItems:'end'}}><img src='https://icones.pro/wp-content/uploads/2022/07/symbole-d-eclair-orange.png' style={{width:'45px', marginTop:'20px', display:'flex', alignItems:'center'}}/>BLITZ<span style={{fontSize:'10px', fontWeight:'100', margin:'7px'}}>REGISTRO</span></h1>
+      </div>
+      <form className="container-formulario-register" onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="email">Nombre:</label>
           <input
+            className="inputs-register"
+            placeholder="Nombre"
             type="text"
             id="name"
             value={datosRegistro.name}
@@ -55,8 +59,9 @@ const Register: React.FC =  () =>  {
           />
         </div>
         <div>
-          <label htmlFor="lastName">Apellido:</label>
           <input
+            className="inputs-register"
+            placeholder="Apellido"
             type="text"
             id="lastName"
             value={datosRegistro.lastName}
@@ -65,8 +70,9 @@ const Register: React.FC =  () =>  {
           />
         </div>
         <div>
-          <label htmlFor="email">Email:</label>
           <input
+            className="inputs-register"
+            placeholder="Email"
             type="email"
             id="email"
             value={datosRegistro.email}
@@ -75,8 +81,9 @@ const Register: React.FC =  () =>  {
           />
         </div>
         <div>
-          <label htmlFor="password">Contraseña:</label>
           <input
+            className="inputs-register"
+            placeholder="Contraseña"
             type="password"
             id="password"
             value={datosRegistro.password}
@@ -85,8 +92,9 @@ const Register: React.FC =  () =>  {
           />
         </div>
          <div>
-          <label htmlFor="password">Verificar Contraseña:</label>
           <input
+            className="inputs-register"
+            placeholder="Verificar Contraseña"
             type="password"
             id="verificacionPassword"
             value={datosRegistro.verificacionPassword}
@@ -94,8 +102,8 @@ const Register: React.FC =  () =>  {
             required
           />
         </div>
-        {error ? <h5 style={{color: 'red'}}>Las contraseñas no coinciden</h5>: null }
-        <button type="submit">Register</button>
+        {error ? <h5 className="error-register" >Las contraseñas no coinciden</h5>: null }
+        <button className="button-register" type="submit">Registrarme</button>
 
       </form>
     </div>

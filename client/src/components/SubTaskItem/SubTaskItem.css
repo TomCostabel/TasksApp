@@ -5,6 +5,7 @@
   justify-content: space-between;
   border-bottom: 1px solid rgba(255, 255, 255, 0.13);
   margin-bottom: 20px;
+  overflow-wrap: break-word
 }
 
 .container-subtask-check-delete {
@@ -22,7 +23,7 @@
 }
 
 .button-checkSubTask:hover {
-  color: #ce5813;
+  color: #ff6600;
   transition: 200ms;
 }
 

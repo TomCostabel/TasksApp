@@ -19,8 +19,8 @@ const TaskItem = ({ task, userId, newSubTask, handleChange, handleSubmitSubTask,
     <div className="container-principal-taskItem" >
       <div style={{ width: '400px'}}>
         <li className="tarea"  key={task._id}>
-          <h4   style={{color: task.check ? '#ce5813' : 'white', textDecoration: task.check ?'line-through' : 'none', fontSize:'28px', width: '450px'
-  }}><span style={{ color:'#ce5813', fontSize:'28px', textDecoration:task.check ? 'none' : 'none'}}>ϟ </span>{task.title}</h4>
+          <h4   style={{color: task.check ? '#ff6600' : 'white', textDecoration: task.check ?'line-through' : 'none', fontSize:'28px', width: '450px'
+  }}><span style={{ color:'#ff6600', fontSize:'28px', textDecoration:task.check ? 'none' : 'none'}}>ϟ </span>{task.title}</h4>
           <div className="container-check-delete">
             <h5 className="button-check"  onClick={() => updateCheck(userId, task.id)}>✓</h5>
             <h5 className="button-delete" onClick={() => {
@@ -48,7 +48,7 @@ const TaskItem = ({ task, userId, newSubTask, handleChange, handleSubmitSubTask,
           <form className="form-subTarea"  onSubmit={(e) => handleSubmitSubTask(e, task.id)}>
             <input 
             className="input-subTarea"
-            maxLength={155}
+            maxLength={133}
             disabled={task.check ? true : false}
             type="text" 
             value={newSubTask} 

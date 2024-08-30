@@ -20,7 +20,6 @@ const Login: React.FC = () => {
     window.localStorage.setItem('email', email)
   };
 
-
   useEffect(() => {
     const email =  window.localStorage.getItem('email')
     if (email) {
@@ -29,12 +28,15 @@ const Login: React.FC = () => {
   }, [isLogin, navigate]);
 
   return (
-    <div className='container-principal'>
-      <h1>Login</h1>
+    <div className='container-principal-login'>
+      <div className='container-logo'>
+      <h1 style={{color:'white', height:'50px',fontSize:'35px', display:'flex', alignItems:'end'}}><img src='https://icones.pro/wp-content/uploads/2022/07/symbole-d-eclair-orange.png' style={{width:'45px', marginTop:'20px', display:'flex', alignItems:'center'}}/>BLITZ</h1>
+      </div>
       <form className='container-formulario' onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Email:</label>
+        <div className='container-input'>
           <input
+            className='inputs'
+            placeholder='Email'
             type="email"
             id="email"
             value={email}
@@ -42,9 +44,10 @@ const Login: React.FC = () => {
             required
           />
         </div>
-        <div>
-          <label htmlFor="password">Password:</label>
+        <div className='container-input'>
           <input
+            className='inputs'
+            placeholder='Contraseña'
             type="password"
             id="password"
             value={password}
@@ -52,12 +55,12 @@ const Login: React.FC = () => {
             required
           />
         </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit">Login</button>
+        {error && <p className='error'>{error}</p>}
+        <button className='button-login' type="submit">Login</button>
       </form>
-      <div>
-        <h6>No tenes cuenta ?</h6>
-        <button onClick={() => navigate('register')} >Registrate</button>
+      <div className='container-reg'>
+        <span style={{fontSize:'15px'}}>¿No tenés cuenta?</span>
+        <h4 style={{cursor:'pointer', color:'#ff6600', fontSize:'14px', textShadow:'1px 1px 2px #ffffff41'}}  onClick={() => navigate('register')} >Regístrate</h4>
       </div>
     </div>
   );

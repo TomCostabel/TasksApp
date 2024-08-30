@@ -1,60 +1,33 @@
-.container-principal-login {
+.container-principal-registro {
   width: 350px;
   background-color: #0000003d;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 31vh;
-  min-height: 350px;
+  height: 450px;
   border-radius: 20px;
   box-shadow: 0 1px 10px -2px #b39b9b80;
 }
 
-.container-formulario {
+.container-formulario-register {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 270px;
+  width: 350px;
   gap: 15px;
-  height: 180px;
+  height: 330px;
 }
 
-.container-input {
-  width: 270px;
-  display: flex;
-  justify-content: center;
-}
-
-.container-reg {
-  width: 200px;
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-  justify-content: space-evenly;
-  height: 30px;
-}
-
-.container-logo {
-  margin-left: -10px;
-}
-
-.inputs {
+.inputs-register {
   height: 25px;
   border-radius: 10px;
   border: 2px solid white;
   font-size: 15px;
 }
 
-.error {
-  color: red;
-  position: absolute;
-  margin-top: 50px;
-  font-weight: 100;
-}
-
-
-.button-login {
+.button-register {
   font-family: monospace;
   font-size: 17px;
   font-weight: 800;
@@ -69,7 +42,14 @@
   margin-top: 30px;
 }
 
-.buttons-login:active {
+.buttons-register:active {
   box-shadow: none;
   transform: translate(3px, 3px);
+}
+
+.error-register {
+  color: red;
+  position: absolute;
+  margin-top: 200px;
+  font-weight: 100;
 }

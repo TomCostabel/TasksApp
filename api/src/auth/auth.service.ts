@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from 'src/schemas/user.schema';
 import { Model } from 'mongoose';
@@ -20,12 +20,12 @@ export class AuthService {
     const user = await this.userModel.findOne({ email })
 
     if (!user) {
-      throw new NotFoundException('User not found');
+      throw new HttpException('Email no registrado', HttpStatus.UNAUTHORIZED);
     }
 
     const isMatch = await this.comparePasswords(password, user.password)
     if (!isMatch) {
-      throw new UnauthorizedException('Invalid credentials');
+      throw new UnauthorizedException('Contraseña Incorrecta');
     }
 
     await this.userModel.updateOne({ email }, { isLogin: true })

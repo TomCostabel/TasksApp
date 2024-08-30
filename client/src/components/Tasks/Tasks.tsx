@@ -71,7 +71,7 @@ export function Tasks () {
             <form className="form"  onSubmit={handleSubmitTask}>
               <input 
                 className="input"
-                maxLength={69}
+                maxLength={64}
                 type="text" 
                 value={newTask} 
                 placeholder="Tarea nueva..." 

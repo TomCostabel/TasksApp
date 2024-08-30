@@ -47,7 +47,7 @@ body {
   --width-of-input: 250px;
   --border-height: 1px;
   --border-before-color: rgba(221, 221, 221, 0.39);
-  --border-after-color: #ce5813;
+  --border-after-color: #ff6600;
   --input-hovered-color: #e049a61f;
   position: relative;
   width: var(--width-of-input);
