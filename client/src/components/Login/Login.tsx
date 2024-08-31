@@ -6,26 +6,35 @@ import './Login.css'
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login, error, isLogin } = useAuthStore((state) => ({
+  const [error, setError] = useState('');
+
+  const { login,errorLogin } = useAuthStore((state) => ({
     login: state.login,
-    error: state.error,
+    errorLogin: state.errorLogin,
     isLogin: state.isLogin,
   }));
+
  
   const navigate = useNavigate();
-
+  
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await login(email, password)
-    window.localStorage.setItem('email', email)
+    if(!errorLogin) {
+      window.localStorage.setItem('email', email)
+       navigate('/dashboard'); 
+    }
   };
+  useEffect(() => {
+    if (errorLogin) {
+      const cleanedError = errorLogin.replace(/^Error:\s*/, ''); // Remueve "Error:" al principio de la cadena
+      setError(cleanedError);
+    }
+  }, [errorLogin, setError]);
 
   useEffect(() => {
-    const email =  window.localStorage.getItem('email')
-    if (email) {
-      navigate('/dashboard'); 
-    }
-  }, [isLogin, navigate]);
+    setError('');
+  }, [setError]);
 
   return (
     <div className='container-principal-login'>
@@ -60,7 +69,7 @@ const Login: React.FC = () => {
       </form>
       <div className='container-reg'>
         <span style={{fontSize:'15px'}}>¿No tenés cuenta?</span>
-        <h4 style={{cursor:'pointer', color:'#ff6600', fontSize:'14px', textShadow:'1px 1px 2px #ffffff41'}}  onClick={() => navigate('register')} >Regístrate</h4>
+        <h4 style={{cursor:'pointer', color:'#ff6600', fontSize:'14px', textShadow:'1px 1px 2px #ffffff41'}}  onClick={() => navigate('/register')} >Regístrate</h4>
       </div>
     </div>
   );

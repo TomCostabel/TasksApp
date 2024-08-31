@@ -1,14 +1,21 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware'
 
+interface UserRegister {
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
 interface AuthState {
   isLogin: boolean;
   setLogin: (loginState: boolean) => void;
   user: { email: string } | null;
   login: (email: string, password: string) => Promise<void>;
   logout: (email: string) => Promise<void>;
-  register: (userRegister: object) => Promise<void>
-  error: string | null;
+  register: (userRegister: UserRegister) => Promise<void>
+  errorLogin: string | null;
+  errorRegister: string | null;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -17,7 +24,9 @@ export const useAuthStore = create<AuthState>()(
       isLogin: false,
       setLogin: (loginState) => set({ isLogin: loginState }),
       user: null,
-      error: null,
+      errorLogin: null,
+      errorRegister: null,
+
 
       login: async (email, password) => {
         try {
@@ -28,15 +37,18 @@ export const useAuthStore = create<AuthState>()(
             },
             body: JSON.stringify({ email, password }),
           });
+          console.log(response)
 
           if (!response.ok) {
             const errorData = await response.json()
+            set({ errorLogin: errorData });
             throw new Error(errorData.message);
           }
 
-          set({ isLogin: true, user: { email }, error: null });
+          set({ isLogin: true, user: { email }, errorLogin: null });
+
         } catch (error) {
-          set({ error: `${error}` });
+          set({ errorLogin: `${error}` });
         }
       },
 
@@ -54,14 +66,19 @@ export const useAuthStore = create<AuthState>()(
             throw new Error('Logout failed');
           }
 
-          set({ isLogin: false, user: null, error: null });
+          set({ isLogin: false, user: null, errorLogin: null });
         } catch (error) {
-          set({ error: `${error}` });
+          set({ errorLogin: `${error}` });
         }
       },
 
-      register: async (userRegister: object) => {
+      register: async (userRegister: UserRegister) => {
         try {
+          const { password, confirmPassword } = userRegister;
+
+          if (password !== confirmPassword) {
+            throw new Error('Las contraseñas no coinciden');
+          }
           const response = await fetch('http://localhost:3000/users', {
             method: 'POST',
             headers: {
@@ -69,14 +86,13 @@ export const useAuthStore = create<AuthState>()(
             },
             body: JSON.stringify(userRegister),
           });
-
           if (!response.ok) {
-            throw new Error('Error al registrar usuario');
+            throw new Error('Email ya registrado');
           }
 
-          set({ error: null });
+          set({ errorRegister: null });
         } catch (error) {
-          set({ error: `${error}` });
+          set({ errorRegister: `${error}` });
         }
       },
     }),

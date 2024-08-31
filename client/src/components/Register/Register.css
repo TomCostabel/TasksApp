@@ -18,6 +18,7 @@
   width: 350px;
   gap: 15px;
   height: 330px;
+  margin-top: 10px;
 }
 
 .inputs-register {
@@ -50,6 +51,15 @@
 .error-register {
   color: red;
   position: absolute;
-  margin-top: 200px;
+  margin-top: 130px;
   font-weight: 100;
+  font-size: 15px;
+}
+
+.container-iniciar {
+  display: flex;
+  width: 350px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }

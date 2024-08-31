@@ -4,34 +4,46 @@ import { useNavigate } from "react-router-dom"
 import './Register.css'
 
 const Register: React.FC =  () =>  {
-  const { register, isLogin } = useAuthStore()
+  const { register, isLogin, errorRegister } = useAuthStore()
   const navigate = useNavigate()
-  const [error, setError] = useState('')
+  const [error, setError] = useState<string>('')
+  const [isRegistering, setIsRegistering] = useState<boolean>(false);
   const [datosRegistro, setDatosRegistro] = useState({
   name : '',
   lastName: '',
   email: '',
   password: '',
-  verificacionPassword: ''
+  confirmPassword: ''
 })
 
   useEffect(() => {
-    const email = window.localStorage.getItem('email')
-    if (email || isLogin) {
-      navigate('/dashboard'); 
+    if (errorRegister) {
+      const cleanedError = errorRegister.replace(/^Error:\s*/, ''); // Remueve "Error:" al principio de la cadena
+      setError(cleanedError);
     }
-  }, [isLogin, navigate])
+}, [errorRegister]);
 
-  const handleSubmit = (e : React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    if(datosRegistro.password !== datosRegistro.verificacionPassword) {
-      setError('Las contraseñas no coinciden')
-      throw new Error('Las contraseñas no coinciden')
-    }
-    setError('')
-    register(datosRegistro)
-    navigate('/')
+useEffect(() => {
+  setError('');
+  const email = window.localStorage.getItem('email');
+  if (email || isLogin) {
+    navigate('/dashboard');
   }
+}, [isLogin, navigate, setError]);
+
+ useEffect(() => {
+    if (isRegistering && !errorRegister) {
+      navigate('/');
+    }
+  }, [isRegistering, errorRegister, navigate]);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  setIsRegistering(true)
+  await register(datosRegistro);
+  setIsRegistering(false)
+  
+}
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {id, value} = e.target
@@ -96,14 +108,18 @@ const Register: React.FC =  () =>  {
             className="inputs-register"
             placeholder="Verificar Contraseña"
             type="password"
-            id="verificacionPassword"
-            value={datosRegistro.verificacionPassword}
+            id="confirmPassword"
+            value={datosRegistro.confirmPassword}
             onChange={handleChange}
             required
           />
         </div>
-        {error ? <h5 className="error-register" >Las contraseñas no coinciden</h5>: null }
+        {error && <h5 className="error-register">{error}</h5>}
         <button className="button-register" type="submit">Registrarme</button>
+        <div className="container-iniciar">
+          <span>¿Ya tenés cuenta?</span>
+         <h4 style={{cursor:'pointer', color:'#ff6600', fontSize:'14px', textShadow:'1px 1px 2px #ffffff41'} } onClick={() => navigate('/')}> Iniciar sesión</h4>
+        </div>
 
       </form>
     </div>
