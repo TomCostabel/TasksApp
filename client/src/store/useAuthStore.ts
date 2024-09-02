@@ -16,6 +16,7 @@ interface AuthState {
   register: (userRegister: UserRegister) => Promise<void>
   errorLogin: string | null;
   errorRegister: string | null;
+
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -27,7 +28,6 @@ export const useAuthStore = create<AuthState>()(
       errorLogin: null,
       errorRegister: null,
 
-
       login: async (email, password) => {
         try {
           const response = await fetch('http://localhost:3000/auth/login', {
@@ -37,7 +37,6 @@ export const useAuthStore = create<AuthState>()(
             },
             body: JSON.stringify({ email, password }),
           });
-          console.log(response)
 
           if (!response.ok) {
             const errorData = await response.json()

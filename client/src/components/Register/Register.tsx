@@ -56,7 +56,7 @@ useEffect(() => {
   return (
     <div className="container-principal-registro">
       <div className='container-logo'>
-      <h1 style={{color:'white', height:'50px',fontSize:'35px', display:'flex', alignItems:'end'}}><img src='https://icones.pro/wp-content/uploads/2022/07/symbole-d-eclair-orange.png' style={{width:'45px', marginTop:'20px', display:'flex', alignItems:'center'}}/>BLITZ<span style={{fontSize:'10px', fontWeight:'100', margin:'7px'}}>REGISTRO</span></h1>
+      <h1 style={{color:'white', height:'50px',fontSize:'35px', display:'flex', alignItems:'end'}}><img src='https://icones.pro/wp-content/uploads/2022/07/symbole-d-eclair-orange.png' style={{width:'45px', marginTop:'20px', display:'flex', alignItems:'center'}}/>BOLT<span style={{fontSize:'10px', fontWeight:'100', margin:'7px'}}>REGISTRO</span></h1>
       </div>
       <form className="container-formulario-register" onSubmit={handleSubmit}>
         <div>

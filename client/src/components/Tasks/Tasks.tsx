@@ -13,14 +13,14 @@ type NewSubTasksState = {
 
 export function Tasks () {
 
-
-  
-
   const { user, userData, addTask, deleteTask, updateCheck, addSubTask, deleteSubTask, updateCheckSubTask } = useTasksStore();
-  const {isLogin } = useAuthStore((state) => ({logout: state.logout, isLogin: state.isLogin}));
+  const {isLogin, setLogin } = useAuthStore((state) => ({logout: state.logout, isLogin: state.isLogin, setLogin: state.setLogin}));
   const [newSubTask, setNewSubTask] = useState<NewSubTasksState>({});
   const [newTask, setNewTask] = useState('');
   const navigate = useNavigate();
+  const emailLocalStorage = !window.localStorage.getItem('email') //-----> Lo hago Booleano
+
+  //--------------- useEffect [Reedirect a la pagina principal con el cambio del estado isLogin] ---------->
 
   useEffect(() => {
   if (!isLogin) {
@@ -29,12 +29,22 @@ export function Tasks () {
   }
   }, [isLogin, navigate]);
 
+  //--------------- useEffect [Controla userData para mostrar la informacion del user] ---------->
   useEffect(() => {
       const emailStorage = localStorage.getItem('email');
       if (emailStorage) {
         userData(emailStorage);
       }
   }, [userData]);
+
+  //--------------- useEffect [Control logout y redirect por navegador] ---------->
+  useEffect(() => {
+  return () => {
+    if (emailLocalStorage === false) {
+      setLogin(false);
+    }
+  };
+}, [emailLocalStorage]);
   
   // ------------Actualiza solo la sub-tarea correspondiente al taskId------------>
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, taskId:string)   => {
