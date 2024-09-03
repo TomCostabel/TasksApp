@@ -4,9 +4,7 @@ module.exports = {
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended'
-    // 'plugin:prettier/recommended' // Si usas Prettier, esta línea lo integra con ESLint
   ],
-  plugins: ['react'],
   parserOptions: {
     ecmaVersion: 2020,
     sourceType: 'module'
@@ -20,7 +18,7 @@ module.exports = {
     'semi': ['error', 'always'],
     'quotes': ['error', 'single'],
     'react/react-in-jsx-scope': 'off',
-    '@typescript-eslint/no-unused-vars': ['warn'],
+    'no-unused-vars': ['off'],
     // Añade otras reglas según lo necesites
     'indent': ['error', 2], // Verifica la indentación
     'no-multiple-empty-lines': ['error', { max: 1 }], // Limita líneas vacías

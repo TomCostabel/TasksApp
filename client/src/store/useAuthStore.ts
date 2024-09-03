@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware'
+import { persist, createJSONStorage } from 'zustand/middleware';
 
 interface UserRegister {
   email: string;
@@ -33,13 +33,13 @@ export const useAuthStore = create<AuthState>()(
           const response = await fetch('http://localhost:3000/auth/login', {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json',
+              'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ email, password }),
+            body: JSON.stringify({ email, password })
           });
 
           if (!response.ok) {
-            const errorData = await response.json()
+            const errorData = await response.json();
             set({ errorLogin: errorData });
             throw new Error(errorData.message);
           }
@@ -56,7 +56,7 @@ export const useAuthStore = create<AuthState>()(
           const response = await fetch('http://localhost:3000/auth/logout', {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json',
+              'Content-Type': 'application/json'
             },
             body: JSON.stringify({ email })
           });
@@ -81,9 +81,9 @@ export const useAuthStore = create<AuthState>()(
           const response = await fetch('http://localhost:3000/users', {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json',
+              'Content-Type': 'application/json'
             },
-            body: JSON.stringify(userRegister),
+            body: JSON.stringify(userRegister)
           });
           if (!response.ok) {
             throw new Error('Email ya registrado');
@@ -93,13 +93,13 @@ export const useAuthStore = create<AuthState>()(
         } catch (error) {
           set({ errorRegister: `${error}` });
         }
-      },
+      }
     }),
 
-    // -------------> Persistencia en el localStorage 
+    // -------------> Persistencia en el localStorage
     {
       name: 'auth-storage',
-      storage: createJSONStorage(() => localStorage),
+      storage: createJSONStorage(() => localStorage)
     }
   )
 );

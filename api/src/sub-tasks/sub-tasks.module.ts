@@ -10,6 +10,6 @@ import { User, userSchema } from 'src/schemas/user.schema';
   ],
   controllers: [SubTasksController],
   providers: [SubTasksService],
-  exports: [SubTasksModule],
+  exports: [SubTasksModule]
 })
 export class SubTasksModule { }

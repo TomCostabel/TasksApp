@@ -1,4 +1,4 @@
-import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
+import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 
 @Schema({
   timestamps: true //----------> Esto lo que hace es agregarle las fechas de creacion y actualizacion
@@ -8,26 +8,25 @@ export class User {
     required: true,
     trim: true
   })
-  name: string
+  name: string;
 
   @Prop({
     required: true,
     trim: true
   })
-  lastName: string
+  lastName: string;
 
   @Prop({
     unique: true,
     required: true,
     trim: true
   })
-  email: string
-
+  email: string;
   @Prop({
     required: true,
     trim: true
   })
-  password: string
+  password: string;
 
   @Prop({
     unique: true,
@@ -55,13 +54,12 @@ export class User {
         title: { type: String, required: true },
         subTaskCheck: { type: Boolean, default: false },
         id: { type: String, required: true }
-      }],
+      }]
     }],
     default: []
   })
   tasks: { title: string; check: boolean; id: string, subTasks: Array<{ title: string, subTaskCheck: boolean, id: string }> }[];
 
-
 }
 
-export const userSchema = SchemaFactory.createForClass(User)
+export const userSchema = SchemaFactory.createForClass(User);

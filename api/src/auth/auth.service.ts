@@ -17,28 +17,28 @@ export class AuthService {
   }
 
   async login(email: string, password: string) {
-    const user = await this.userModel.findOne({ email })
+    const user = await this.userModel.findOne({ email });
 
     if (!user) {
       throw new HttpException('Email no registrado', HttpStatus.UNAUTHORIZED);
     }
 
-    const isMatch = await this.comparePasswords(password, user.password)
+    const isMatch = await this.comparePasswords(password, user.password);
     if (!isMatch) {
       throw new UnauthorizedException('Contraseña Incorrecta');
     }
 
-    await this.userModel.updateOne({ email }, { isLogin: true })
+    await this.userModel.updateOne({ email }, { isLogin: true });
 
-    return { message: 'Login successful' }
+    return { message: 'Login successful' };
   }
 
   async logout(email: string) {
-    const user = await this.userModel.findOne({ email })
+    const user = await this.userModel.findOne({ email });
     if (!user) {
-      throw new NotFoundException('Email not found')
+      throw new NotFoundException('Email not found');
     }
-    await this.userModel.updateOne({ email }, { isLogin: false })
-    return { message: 'Logout successful' }
+    await this.userModel.updateOne({ email }, { isLogin: false });
+    return { message: 'Logout successful' };
   }
 }

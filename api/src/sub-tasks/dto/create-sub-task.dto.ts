@@ -1,24 +1,24 @@
-import { IsBoolean, IsNotEmpty, IsString } from "class-validator"
+import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateSubTaskDto {
 
   @IsNotEmpty()
   @IsString()
-  title: string
+  title: string;
 
   @IsNotEmpty()
   @IsString()
-  id: string
+  id: string;
 
   @IsNotEmpty()
   @IsString()
-  userId: string
+  userId: string;
 
   @IsNotEmpty()
   @IsString()
-  taskId: string
+  taskId: string;
 
   @IsBoolean()
   @IsNotEmpty()
-  subTaskCheck: boolean
+  subTaskCheck: boolean;
 }

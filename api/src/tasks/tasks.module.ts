@@ -10,7 +10,7 @@ import { MongooseModule } from '@nestjs/mongoose';
   ],
   controllers: [TasksController],
   providers: [TasksService],
-  exports: [TasksModule],
+  exports: [TasksModule]
 
 })
 export class TasksModule { }

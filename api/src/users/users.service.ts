@@ -11,22 +11,22 @@ export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<User>) { }
 
   async hashPassword(password: string): Promise<string> {
-    const saltRounds = 10
-    const salt = await bcrypt.genSalt(saltRounds)
-    const hashedPassword = await bcrypt.hash(password, salt)
-    return hashedPassword
+    const saltRounds = 10;
+    const salt = await bcrypt.genSalt(saltRounds);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    return hashedPassword;
   }
 
   findAll() {
-    return this.userModel.find()
+    return this.userModel.find();
   }
 
   async createUser(newUser: CreateUserDto): Promise<User> {
-    const { email } = newUser
+    const { email } = newUser;
     try {
-      const userExistente = await this.userModel.findOne({ email: email })
+      const userExistente = await this.userModel.findOne({ email: email });
       if (userExistente) {
-        throw new Error('Email ya registrado')
+        throw new Error('Email ya registrado');
       }
       const hashedPassword = await this.hashPassword(newUser.password);
       const createdUser = new this.userModel({
@@ -45,16 +45,16 @@ export class UsersService {
   }
 
   deleteUser(id: string) {
-    return this.userModel.findOneAndDelete({ _id: id })
+    return this.userModel.findOneAndDelete({ _id: id });
   }
 
   findOne(email: string) {
     const user = this.userModel.findOne({ email: email });
     if (!user) {
-      throw new NotFoundException(`Usuario con el id #${email} no encontrado`)
+      throw new NotFoundException(`Usuario con el id #${email} no encontrado`);
     }
 
-    return user
+    return user;
   }
 
 }
