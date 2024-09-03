@@ -14,7 +14,7 @@ type NewSubTasksState = {
 export function Tasks () {
 
   const { user, userData, addTask, deleteTask, updateCheck, addSubTask, deleteSubTask, updateCheckSubTask } = useTasksStore();
-  const {isLogin, setLogin } = useAuthStore((state) => ({logout: state.logout, isLogin: state.isLogin, setLogin: state.setLogin}));
+  const {isLogin, setLogin } = useAuthStore((state) => ({isLogin: state.isLogin, setLogin: state.setLogin}));
   const [newSubTask, setNewSubTask] = useState<NewSubTasksState>({});
   const [newTask, setNewTask] = useState('');
   const navigate = useNavigate();
